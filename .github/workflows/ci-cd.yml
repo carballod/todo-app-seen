@@ -168,12 +168,20 @@ jobs:
         with:
           scan-type: "fs"
           scan-ref: "."
+          format: "table"
+
+      - name: 🔍 Run Trivy for SARIF (optional)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
           format: "sarif"
           output: "trivy-results.sarif"
 
-      - name: 📤 Upload Trivy scan results
+      - name: 📤 Upload Trivy scan results (if code scanning enabled)
         uses: github/codeql-action/upload-sarif@v3
         if: always()
+        continue-on-error: true
         with:
           sarif_file: "trivy-results.sarif"
 
