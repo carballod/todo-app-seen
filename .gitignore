@@ -105,4 +105,12 @@ build/Release
 .parcel-cache
 
 # Stores VSCode versions used for testing VSCode extensions
-.vscode-test 
+.vscode-test
+
+# CI/CD y deployment
+.env.production
+deployment-logs/
+render-logs/
+
+# GitHub Actions artifacts
+.github/artifacts/ 
