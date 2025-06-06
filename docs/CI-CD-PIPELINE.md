@@ -1,12 +1,12 @@
 # 🚀 Pipeline CI/CD - Todo App
 
-## 📋 **Descripción General**
+## **Descripción General**
 
-Esta documentación describe el pipeline completo de CI/CD implementado con **GitHub Actions** para la aplicación Todo List del Grupo Seen.
+Esta documentación describe el pipeline completo de CI/CD implementado con **GitHub Actions**.
 
 ---
 
-## 🏗️ **Arquitectura del Pipeline**
+##  **Arquitectura del Pipeline**
 
 ```mermaid
 graph TD
@@ -24,7 +24,7 @@ graph TD
 
 ---
 
-## 🔧 **Jobs del Pipeline**
+##  **Jobs del Pipeline**
 
 ### **1. 🧪 Test Job**
 
@@ -84,7 +84,7 @@ Pasos:
 
 ---
 
-## 🏷️ **Tags y Versionado**
+##  **Tags y Versionado**
 
 ### **Estrategia de Tags:**
 
@@ -105,22 +105,6 @@ ghcr.io/grupo-seen/todo-app/frontend:develop-def5678
 ```
 
 ---
-
-## 🌍 **Entornos de Deployment**
-
-### **🧪 Staging Environment**
-
-- **URL:** https://todo-app-staging.render.com
-- **Trigger:** Push a `main`
-- **Database:** MySQL en Render
-- **Monitoring:** Health checks cada 30s
-
-### **🚀 Production Environment** (Futuro)
-
-- **URL:** https://todo-app.render.com
-- **Trigger:** Manual o Git Tags
-- **Database:** MySQL dedicado
-- **Monitoring:** Avanzado con alertas
 
 ---
 
@@ -147,8 +131,6 @@ ghcr.io/grupo-seen/todo-app/frontend:develop-def5678
 
 ---
 
-## 🔐 **Secrets y Variables**
-
 ### **GitHub Secrets:**
 
 ```bash
@@ -157,20 +139,9 @@ RENDER_API_KEY        # Para deployment automático
 DB_PASSWORD           # Password de base de datos
 CODECOV_TOKEN         # Para reportes de coverage
 ```
-
-### **Environment Variables:**
-
-```bash
-NODE_ENV=production
-PORT=3000
-DB_HOST=localhost
-DB_USER=todo_user
-DB_NAME=todoapp
-```
-
 ---
 
-## 🚨 **Troubleshooting**
+## **Troubleshooting**
 
 ### **❌ Tests Fallando:**
 
@@ -194,58 +165,10 @@ docker build -t test-frontend ./frontend
 gh run list --repo usuario/todo-app-docker
 gh run view {run-id}
 ```
-
-### **🚀 Deploy Issues:**
-
-```bash
-# Verificar health checks
-curl -f https://todo-app-staging.render.com/api/tasks
-
-# Ver logs de Render
-render logs --service todo-backend
-```
-
 ---
 
-## 📈 **Mejoras Futuras**
-
-### **Próximas Implementaciones:**
-
-- [ ] **Integration Tests** con Cypress
-- [ ] **Performance Testing** con Artillery
-- [ ] **Database Migrations** automáticas
-- [ ] **Blue-Green Deployment**
-- [ ] **Monitoring** con Prometheus + Grafana
-- [ ] **Notifications** a Slack/Discord
-
-### **Optimizaciones:**
-
-- [ ] **Docker Layer Caching** para builds más rápidos
-- [ ] **Parallel Testing** para reducir tiempo
-- [ ] **Multi-stage deploys** (dev → staging → prod)
-
----
-
-## 👥 **Equipo y Responsabilidades**
-
-| Rol              | Responsable | Tareas                             |
-| ---------------- | ----------- | ---------------------------------- |
-| **DevOps Lead**  | Grupo Seen  | Pipeline configuration, deployment |
-| **Backend Dev**  | Grupo Seen  | API tests, database setup          |
-| **Frontend Dev** | Grupo Seen  | UI tests, build optimization       |
-| **QA**           | Grupo Seen  | Test coverage, quality gates       |
-
----
-
-## 📚 **Referencias**
+## **Referencias**
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
-- [Render Deployment Guide](https://render.com/docs)
 - [Jest Testing Framework](https://jestjs.io/docs/getting-started)
-
----
-
-**Desarrollado por:** Grupo Seen  
-**Última actualización:** $(date)  
-**Versión:** 1.0.0

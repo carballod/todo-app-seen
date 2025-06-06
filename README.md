@@ -262,7 +262,3 @@ Este proyecto fue desarrollado por el **Grupo Seen** como parte del trabajo fina
 - ✅ Control de versiones con Git
 
 ---
-
-## 📄 **Licencia**
-
-ISC License - Ver archivo LICENSE para más detalles.
