@@ -1,0 +1,38 @@
+body {
+  background: #f8f9fa;
+}
+
+.todo-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.task:last-child {
+  border-bottom: none;
+}
+
+.task.done span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+footer {
+  font-size: 0.9rem;
+  border-top: 1px solid #dee2e6;
+}
