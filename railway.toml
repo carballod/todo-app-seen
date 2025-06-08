@@ -2,7 +2,9 @@
 # Railway auto-detects services from dashboard, this file provides additional config
 
 [build]
-builder = "DOCKER"
+builder = "dockerfile"
+dockerfilePath = "backend/Dockerfile"
+watchPatterns = ["backend/**"]
 
 [deploy]
 healthcheckPath = "/api/tasks"
