@@ -6,6 +6,9 @@ builder = "dockerfile"
 dockerfilePath = "backend/Dockerfile"
 watchPatterns = ["backend/**"]
 
+[variables]
+DOCKER_BUILDKIT = "1"
+
 [deploy]
 healthcheckPath = "/api/tasks"
 healthcheckTimeout = 100

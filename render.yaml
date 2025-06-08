@@ -1,0 +1,58 @@
+services:
+  - type: web
+    name: todo-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    branch: main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: todo-database
+          property: host
+      - key: DB_USER
+        value: todo_user
+      - key: DB_PASSWORD
+        generateValue: true
+      - key: DB_NAME
+        value: todoapp
+    healthCheckPath: /api/tasks
+
+  - type: web
+    name: todo-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    plan: free
+    region: oregon
+    branch: main
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: todo-backend
+          property: host
+
+  - type: pserv
+    name: todo-database
+    env: docker
+    plan: free
+    region: oregon
+    dockerCommand: |
+      docker run -d \
+        -p 3306:3306 \
+        -e MYSQL_ROOT_PASSWORD=$DB_PASSWORD \
+        -e MYSQL_DATABASE=todoapp \
+        -e MYSQL_USER=todo_user \
+        -e MYSQL_PASSWORD=$DB_PASSWORD \
+        mysql:8.0
+    envVars:
+      - key: DB_PASSWORD
+        generateValue: true
