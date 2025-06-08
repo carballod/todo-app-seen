@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Copiamos el script de espera a la base de datos
-COPY wait-for-db.sh /wait-for-db.sh
+COPY backend/wait-for-db.sh /wait-for-db.sh
 
 # Damos permisos de ejecución al script
 RUN chmod +x /wait-for-db.sh
