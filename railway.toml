@@ -8,6 +8,7 @@ watchPatterns = ["backend/**"]
 
 [variables]
 DOCKER_BUILDKIT = "1"
+NODE_ENV = "production"
 
 [deploy]
 healthcheckPath = "/api/tasks"

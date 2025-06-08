@@ -13,8 +13,11 @@ COPY backend/package*.json ./
 # Instalamos dependencias
 RUN npm install
 
-# Copiamos todo el código
+# Copiamos todo el código del backend
 COPY backend/ .
+
+# Copiamos el frontend para servirlo en producción
+COPY frontend/ ../frontend/
 
 # Damos permisos de ejecución al script
 RUN chmod +x wait-for-db.sh

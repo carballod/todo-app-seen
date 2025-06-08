@@ -2,9 +2,13 @@ const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 
-// Ruta base de tu backend
-const API_URL = "http://localhost:3000/api/tasks";
-
+// Auto-detecta si estamos en desarrollo o producción
+const isLocalhost =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+const API_URL = isLocalhost
+  ? "http://localhost:3000/api/tasks"
+  : `${window.location.origin}/api/tasks`;
 
 // Cargar tareas al iniciar
 document.addEventListener("DOMContentLoaded", loadTasks);
@@ -19,10 +23,9 @@ form.addEventListener("submit", async (e) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: taskText }),
-
       });
       const newTask = await res.json();
-      console.log(newTask); 
+      console.log(newTask);
       addTaskToDOM(newTask);
       input.value = "";
     } catch (error) {
