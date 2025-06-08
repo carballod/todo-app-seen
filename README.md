@@ -14,6 +14,8 @@ Este proyecto es una aplicación de lista de tareas (To-Do List) con backend en 
 - **Orquestación:** Docker Compose
 - **Testing:** Jest + Supertest
 - **CI/CD:** GitHub Actions
+- **Monitoreo:** Prometheus + Grafana + Winston
+- **Métricas:** prom-client + Node.js metrics
 
 ---
 
@@ -88,6 +90,9 @@ npm run dev
 - **Frontend:** [http://localhost:8080](http://localhost:8080)
 - **API Backend:** [http://localhost:3000/api/tasks](http://localhost:3000/api/tasks)
 - **Base de datos:** `localhost:3308` (usuario: `root`, password: `1234`)
+- **Prometheus:** [http://localhost:9090](http://localhost:9090)
+- **Grafana:** [http://localhost:3001](http://localhost:3001) (admin/grafana)
+- **Métricas:** [http://localhost:3000/metrics](http://localhost:3000/metrics)
 
 ---
 
@@ -115,6 +120,43 @@ npm run test:coverage   # Tests con reporte de cobertura
 - Tests de manejo de errores
 - Tests de configuración de la aplicación
 - Mocks de base de datos
+
+---
+
+## 📊 **Monitoreo y Métricas**
+
+### **Stack de Monitoreo:**
+
+- **Prometheus**: Recolección y almacenamiento de métricas
+- **Grafana**: Visualización de dashboards
+- **Winston**: Logging estructurado
+- **prom-client**: Métricas de Node.js
+
+### **Iniciar Monitoreo:**
+
+```bash
+# Iniciar aplicación principal
+docker-compose up -d
+
+# Iniciar stack de monitoreo
+docker-compose -f monitoring/docker-compose.monitoring.yml up -d
+```
+
+### **Métricas Disponibles:**
+
+- **HTTP Requests**: Contador y duración de requests
+- **Sistema**: CPU, memoria, event loop lag
+- **Aplicación**: Tareas activas, completadas, conexiones DB
+- **Node.js**: Garbage collection, heap usage
+
+### **Documentación Completa:**
+
+📖 **[Ver Guía Completa de Prometheus](docs/PROMETHEUS.md)**
+
+- Cómo probar Prometheus
+- Consultas PromQL
+- Configuración de alertas
+- Troubleshooting
 
 ---
 
