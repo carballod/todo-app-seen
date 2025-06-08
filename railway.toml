@@ -1,0 +1,14 @@
+# Railway configuration for app
+# Railway auto-detects services from dashboard, this file provides additional config
+
+[build]
+builder = "DOCKER"
+
+[deploy]
+healthcheckPath = "/api/tasks"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+# Services will be configured from Railway dashboard
+# This file just provides deployment settings
