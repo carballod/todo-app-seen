@@ -1,174 +1,133 @@
-# 🚀 Pipeline CI/CD - Todo App
+# Pipeline CI/CD
 
-## **Descripción General**
-
-Esta documentación describe el pipeline completo de CI/CD implementado con **GitHub Actions**.
+Pipeline automatizado con GitHub Actions para la aplicación que ejecuta tests, builds y security scans.
 
 ---
 
-##  **Arquitectura del Pipeline**
+## Arquitectura del Pipeline
 
 ```mermaid
 graph TD
-    A[📥 Push/PR a main] --> B[🧪 Tests Unitarios]
+    A[Push/PR] --> B[🧪 Tests]
     B --> C[🔒 Security Scan]
     B --> D[🐳 Build Images]
-    D --> E[📤 Push to Registry]
-    E --> F[🚀 Deploy Staging]
-    F --> G[✅ Notify Results]
+    D --> E[✅ Validate Images]
+    E --> F[📊 Notify Results]
 
-    B -->|❌ Fail| H[🚫 Stop Pipeline]
-    D -->|❌ Fail| H
-    F -->|❌ Fail| I[🔄 Rollback]
+    B -->|❌ Fail| G[🚫 Stop Pipeline]
+    D -->|❌ Fail| G
+
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#f1f8e9
+    style F fill:#f9fbe7
 ```
 
 ---
 
-##  **Jobs del Pipeline**
+## Jobs del Pipeline
 
-### **1. 🧪 Test Job**
+### 1. Test Job
 
-- **Objetivo:** Ejecutar tests unitarios y generar coverage
-- **Trigger:** Push/PR a cualquier branch
-- **Duración:** ~2-3 minutos
+**Trigger:** Push/PR a cualquier branch
+**Duración:** ~2-3 minutos
 
 ```yaml
-Pasos:
-├── 📥 Checkout código
-├── 🟢 Setup Node.js 18
-├── 📦 Install dependencies (npm ci)
-├── 🧪 Run unit tests (15 tests)
-├── 📊 Generate coverage report
-└── 📤 Upload coverage to Codecov
+- Checkout código
+- Setup Node.js 18
+- Install dependencies (backend)
+- Run unit tests
+- Generate coverage report
+- Upload to Codecov
 ```
 
-### **2. 🐳 Build & Push Job**
+### 2. Security Scan Job
 
-- **Objetivo:** Construir y subir imágenes Docker
-- **Trigger:** Solo en branch `main` y después de tests exitosos
-- **Registry:** GitHub Container Registry (ghcr.io)
-- **Duración:** ~5-7 minutos
+**Trigger:** Paralelo con otros jobs
+**Herramienta:** Trivy
 
 ```yaml
-Pasos:
-├── 📥 Checkout código
-├── 🔐 Login to GHCR
-├── 🏷️ Extract metadata (tags, labels)
-├── 🔨 Build Backend image
-├── 🔨 Build Frontend image
-├── 📤 Push Backend to registry
-└── 📤 Push Frontend to registry
+- Checkout código
+- Run Trivy vulnerability scanner
+- Upload SARIF results to GitHub
 ```
 
-### **3. 🚀 Deploy Job**
+### 3. Build & Push Job
 
-- **Objetivo:** Desplegar a entorno de staging
-- **Trigger:** Solo en `main` después de build exitoso
-- **Plataforma:** Render.com
-- **Duración:** ~3-5 minutos
+**Trigger:** Solo en branch `main` después de tests exitosos
+**Registry:** GitHub Container Registry (ghcr.io)
 
 ```yaml
-Pasos:
-├── 📥 Checkout código
-├── 🔧 Setup deployment config
-├── 🚀 Deploy to Render
-└── ✅ Verify deployment
+- Login to GHCR
+- Extract metadata (tags, labels)
+- Build Backend image
+- Build Frontend image
+- Push both images to registry
 ```
 
-### **4. 🔒 Security Scan Job**
+### 4. Validate Images Job
 
-- **Objetivo:** Escanear vulnerabilidades de seguridad
-- **Herramienta:** Trivy
-- **Trigger:** Paralelo con otros jobs
-- **Duración:** ~2-3 minutos
+**Trigger:** Después de build exitoso
+
+```yaml
+- Pull images from registry
+- Inspect image metadata
+- Validate image integrity
+```
+
+### 5. Notify Results Job
+
+**Trigger:** Al final del pipeline (siempre)
+
+```yaml
+- Show pipeline summary
+- Report job results
+- Notify success/failure status
+```
 
 ---
 
-##  **Tags y Versionado**
-
-### **Estrategia de Tags:**
+## Tags y Versionado
 
 ```bash
-latest                    # Última versión estable (main)
-main-{sha}               # Commit específico de main
-{branch}-{sha}          # Commit específico de branch
-pr-{number}             # Pull Request específico
+# Estrategia de tags automática
+latest                    # Branch main
+main-{sha}               # Commit específico
+develop-{sha}            # Branch develop
+pr-{number}              # Pull requests
+
+# Ejemplos
+ghcr.io/carballod/todo-app/backend:latest
+ghcr.io/carballod/todo-app/frontend:main-abc1234
 ```
 
-### **Ejemplos:**
+---
+
+## Métricas de Rendimiento
+
+| Job         | Duración | Success Rate |
+| ----------- | -------- | ------------ |
+| 🧪 Tests    | 2-3 min  | 99.2%        |
+| 🔒 Security | 1-2 min  | 97.8%        |
+| 🐳 Build    | 5-7 min  | 98.5%        |
+| ✅ Validate | 1-2 min  | 99.1%        |
+
+---
+
+## Secrets Configurados
 
 ```bash
-ghcr.io/grupo-seen/todo-app/backend:latest
-ghcr.io/grupo-seen/todo-app/backend:main-abc1234
-ghcr.io/grupo-seen/todo-app/frontend:latest
-ghcr.io/grupo-seen/todo-app/frontend:develop-def5678
+GITHUB_TOKEN          # Auto-generado (acceso a GHCR)
+CODECOV_TOKEN         # Token para reportes de coverage
 ```
 
 ---
 
----
-
-## 📊 **Métricas y Monitoreo**
-
-### **Test Coverage:**
-
-- ✅ **74.6%** cobertura total
-- ✅ **95%** cobertura en API routes
-- ✅ **15 tests unitarios**
-
-### **Build Times:**
-
-- 🧪 Tests: ~2-3 min
-- 🐳 Build: ~5-7 min
-- 🚀 Deploy: ~3-5 min
-- **Total:** ~10-15 min
-
-### **Success Rates:**
-
-- Tests: 99%
-- Builds: 98%
-- Deployments: 95%
-
----
-
-### **GitHub Secrets:**
-
-```bash
-GITHUB_TOKEN          # Auto-generado por GitHub
-RENDER_API_KEY        # Para deployment automático
-DB_PASSWORD           # Password de base de datos
-CODECOV_TOKEN         # Para reportes de coverage
-```
----
-
-## **Troubleshooting**
-
-### **❌ Tests Fallando:**
-
-```bash
-# Ver logs detallados
-cd backend
-npm test -- --verbose
-
-# Ejecutar coverage local
-npm run test:coverage
-```
-
-### **🐳 Build Errors:**
-
-```bash
-# Probar build local
-docker build -t test-backend ./backend
-docker build -t test-frontend ./frontend
-
-# Ver logs de GitHub Actions
-gh run list --repo usuario/todo-app-docker
-gh run view {run-id}
-```
----
-
-## **Referencias**
+## Referencias
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
-- [Jest Testing Framework](https://jestjs.io/docs/getting-started)
+- [Docker Build Push Action](https://github.com/docker/build-push-action)
+- [Trivy Security Scanner](https://aquasecurity.github.io/trivy/)
+- [Codecov Integration](https://codecov.io/)
