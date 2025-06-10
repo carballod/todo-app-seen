@@ -91,7 +91,7 @@ npm run dev
 
 ---
 
-## 🧪 **Tests Automatizados**
+## **Tests Automatizados**
 
 ### **Ejecutar tests:**
 
@@ -101,12 +101,6 @@ npm test                # Ejecutar todos los tests
 npm run test:watch      # Tests en modo watch
 npm run test:coverage   # Tests con reporte de cobertura
 ```
-
-### **Cobertura de código:**
-
-- ✅ **15 tests unitarios**
-- ✅ **74.6% cobertura total**
-- ✅ **95% cobertura en rutas de API**
 
 ### **Tests incluidos:**
 
@@ -118,7 +112,7 @@ npm run test:coverage   # Tests con reporte de cobertura
 
 ---
 
-## 📁 **Estructura del Proyecto**
+## **Estructura del Proyecto**
 
 ```
 📁 todo-app-docker/
@@ -149,7 +143,7 @@ npm run test:coverage   # Tests con reporte de cobertura
 
 ---
 
-## 🚀 **Scripts Disponibles**
+## **Scripts Disponibles**
 
 ### **Backend:**
 
@@ -171,7 +165,7 @@ docker-compose logs backend  # Ver logs del backend
 
 ---
 
-## 🔧 **Desarrollo**
+## **Desarrollo**
 
 ### **Agregar nuevas funcionalidades:**
 
@@ -217,7 +211,7 @@ docker-compose down -v
 
 ---
 
-## 🚀 **Pipeline CI/CD**
+## **Pipeline CI/CD**
 
 ### **🔄 Automated Workflow:**
 
@@ -225,25 +219,7 @@ docker-compose down -v
 Push/PR → 🧪 Tests → 🐳 Build → 📤 Push Images → ✅ Validate → 🔒 Security Scan
 ```
 
-### **🏗️ GitHub Actions Pipeline:**
-
-- ✅ **Tests automatizados** (15 unit tests, 74.6% coverage)
-- ✅ **Build de imágenes Docker** (Backend + Frontend)
-- ✅ **Push a GitHub Container Registry**
-- ✅ **Validación de imágenes** Docker
-- ✅ **Security scanning** con Trivy
-- ✅ **Reportes de coverage** con Codecov
-
-### **🎯 Pipeline Status:**
-
-- **Current Phase:** ✅ CI/CD Ready
-- **Next Phase:** 🚀 Deployment Configuration
-
-### **📊 Métricas:**
-
-- **Build time:** ~8-12 minutos
-- **Test success rate:** 99%
-- **Image build success:** 98%
+### **GitHub Actions Pipeline:**
 
 ### **🔗 Ver Pipeline:**
 
@@ -251,7 +227,7 @@ Ir a [Actions tab](../../actions) para ver ejecuciones del pipeline.
 
 ---
 
-## 👥 **Equipo - Grupo Seen**
+## **Equipo - Grupo Seen**
 
 Este proyecto fue desarrollado por el **Grupo Seen** como parte del trabajo final de DevOps, implementando mejores prácticas de:
 
@@ -262,3 +238,7 @@ Este proyecto fue desarrollado por el **Grupo Seen** como parte del trabajo fina
 - ✅ Control de versiones con Git
 
 ---
+
+## **Deploy**
+
+El deploy se realizo en Railway, se puede ver en el siguiente [link](https://todo-app-seen-production.up.railway.app/)
